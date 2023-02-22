@@ -31,8 +31,8 @@ test_dataloader = DataLoader(test_dataset, batch_size=1, shuffle=False, num_work
 
 # model = smp.Unet(encoder_name="resnet34", encoder_depth=5, encoder_weights="imagenet", decoder_use_batchnorm=True,
 #                  activation="sigmoid")
-model = smp.UnetPlusPlus(encoder_name="resnet34", encoder_weights="imagenet")
-model.__name__ = "UnetPlusPlus"
+model = smp.MAnet(encoder_name="resnet34", encoder_weights="imagenet")
+model.__name__ = "MAnet"
 # model = nn.Sequential(nn.Conv2d(3, 512, kernel_size=7, stride=2, padding=3, bias=False))
 
 
@@ -83,7 +83,7 @@ for epoch in range(0, 100):
     # do something (save model, change lr, etc.)
     if max_score < valid_logs['iou_score']:
         max_score = valid_logs['iou_score']
-        torch.save(model, 'best_model_{}_{}.pth'.format(model.__name__, epoch))
+        torch.save(model, os.path.join('saved_models', 'best_model_{}_{}.pth'.format(model.__name__, epoch)))
         print('Model saved!')
 
     if epoch == 25:
