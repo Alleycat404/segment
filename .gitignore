@@ -1,6 +1,6 @@
 #saved models
-saved_models/
-test_result/
+/saved_models
+/test_result
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
