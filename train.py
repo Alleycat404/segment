@@ -1,7 +1,6 @@
 import os
 
 import torch
-import matplotlib.pyplot as plt
 import pytorch_lightning as pl
 import segmentation_models_pytorch as smp
 from segmentation_models_pytorch import utils as smp_utils
@@ -25,14 +24,14 @@ print(f"Valid size: {len(valid_dataset)}")
 print(f"Test size: {len(test_dataset)}")
 
 n_gpu = 0
-train_dataloader = DataLoader(train_dataset, batch_size=1, shuffle=True, num_workers=n_gpu)
+train_dataloader = DataLoader(train_dataset, batch_size=8, shuffle=True, num_workers=n_gpu)
 valid_dataloader = DataLoader(valid_dataset, batch_size=1, shuffle=False, num_workers=n_gpu)
 test_dataloader = DataLoader(test_dataset, batch_size=1, shuffle=False, num_workers=n_gpu)
 
 # model = smp.Unet(encoder_name="resnet34", encoder_depth=5, encoder_weights="imagenet", decoder_use_batchnorm=True,
 #                  activation="sigmoid")
-model = smp.MAnet(encoder_name="resnet34", encoder_weights="imagenet")
-model.__name__ = "MAnet"
+model = smp.PSPNet(encoder_name="resnet34", encoder_weights="imagenet")
+model.__name__ = "PSPNet"
 # model = nn.Sequential(nn.Conv2d(3, 512, kernel_size=7, stride=2, padding=3, bias=False))
 
 
@@ -78,7 +77,7 @@ for epoch in range(0, 100):
 
     print('\nEpoch: {}'.format(epoch))
     train_logs = train_epoch.run(train_dataloader)
-    valid_logs = valid_epoch.run(test_dataloader)
+    valid_logs = valid_epoch.run(valid_dataloader)
 
     # do something (save model, change lr, etc.)
     if max_score < valid_logs['iou_score']:
