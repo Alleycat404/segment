@@ -30,8 +30,8 @@ test_dataloader = DataLoader(test_dataset, batch_size=1, shuffle=False, num_work
 
 # model = smp.Unet(encoder_name="resnet34", encoder_depth=5, encoder_weights="imagenet", decoder_use_batchnorm=True,
 #                  activation="sigmoid")
-model = smp.PAN(encoder_name="resnet34", encoder_weights="imagenet")
-model.__name__ = "PAN"
+model = smp.DeepLabV3Plus(encoder_name="resnet34", encoder_weights="imagenet")
+model.__name__ = "DeepLabV3Plus"
 # model = nn.Sequential(nn.Conv2d(3, 512, kernel_size=7, stride=2, padding=3, bias=False))
 
 
